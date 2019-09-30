@@ -5,7 +5,7 @@ import SignUpInOut from "./SignUpInOut";
 import Masthead from "./Masthead";
 import Demo from "./Demo";
 
-type CurrentUser = {
+export type CurrentUser = {
   uid: string;
   email: string;
 };
@@ -40,7 +40,9 @@ export default function App() {
     <div className="App">
       <header className="AppHeader">
         <h1>suru</h1>
-        {checkedAuth && <SignUpInOut signedIn={signedIn} />}
+        {checkedAuth && (
+          <SignUpInOut currentUser={currentUser} signedIn={signedIn} />
+        )}
       </header>
 
       <Masthead />

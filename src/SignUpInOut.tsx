@@ -3,6 +3,7 @@ import { FormApi } from "final-form";
 import { Form, Field } from "react-final-form";
 import firebase from "firebase";
 import "firebase/auth";
+import { CurrentUser } from "./App";
 
 const ACTION_SIGN_UP: ActionType = "signup";
 const ACTION_SIGN_OUT: ActionType = "signout";
@@ -21,20 +22,22 @@ const ACTION_TITLES: { [actionType in ActionType]: string } = {
 type SignUpInOutFormValues = {
   email: string;
   password: string;
-  actionType: ActionType;
 };
 
 const INITIAL_VALUES: SignUpInOutFormValues = {
   email: "",
-  password: "",
-  actionType: ACTION_SIGN_UP
+  password: ""
 };
 
 type SignUpInOutProps = {
   signedIn: boolean;
+  currentUser: CurrentUser;
 };
 
-export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
+export default function SignUpInOut({
+  signedIn,
+  currentUser
+}: SignUpInOutProps) {
   const [showDialogue, setShowDialogue] = useState(false);
   const [currentAction, setCurrentAction] = useState<ActionType>(
     ACTION_SIGN_UP
@@ -67,19 +70,26 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
     setCurrentAction(ACTION_SIGN_IN);
   }
 
+  function passwordResetButtonHandler() {
+    setShowDialogue(true);
+    setCurrentAction(ACTION_RESET_PASSWORD);
+  }
+
   function signOutHandler() {
     firebase.auth().signOut();
   }
 
   function onSubmit(
-    { email, password, actionType }: SignUpInOutFormValues,
+    { email, password }: SignUpInOutFormValues,
     form: FormApi<SignUpInOutFormValues>
   ) {
-    switch (actionType) {
+    switch (currentAction) {
       case ACTION_SIGN_UP:
         return firebase.auth().createUserWithEmailAndPassword(email, password);
       case ACTION_SIGN_IN:
         return firebase.auth().signInWithEmailAndPassword(email, password);
+      case ACTION_RESET_PASSWORD:
+        return firebase.auth().sendPasswordResetEmail(email);
       default:
         return;
     }
@@ -107,9 +117,16 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
         </>
       )}
       {signedIn && (
-        <button onClick={signOutHandler} className="PlainButton" type="button">
-          {ACTION_TITLES[ACTION_SIGN_OUT]}
-        </button>
+        <>
+          {currentUser.email}
+          <button
+            onClick={signOutHandler}
+            className="PlainButton"
+            type="button"
+          >
+            {ACTION_TITLES[ACTION_SIGN_OUT]}
+          </button>
+        </>
       )}
 
       {!signedIn && showDialogue && (
@@ -134,23 +151,19 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
                     type="email"
                     placeholder="email@domain.com"
                   />
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    id="password"
-                    name="password"
-                    component="input"
-                    type="password"
-                    placeholder="******"
-                  />
-                  {currentAction === ACTION_SIGN_IN && (
-                    <div>Forgot your password?</div>
+                  {(currentAction === ACTION_SIGN_IN ||
+                    currentAction === ACTION_SIGN_UP) && (
+                    <>
+                      <label htmlFor="password">Password</label>
+                      <Field
+                        id="password"
+                        name="password"
+                        component="input"
+                        type="password"
+                        placeholder="******"
+                      />
+                    </>
                   )}
-                  <Field
-                    name="actionType"
-                    component="input"
-                    type="hidden"
-                    value={currentAction}
-                  />
                   <button className="Button" type="submit">
                     {ACTION_TITLES[currentAction]}
                   </button>
@@ -159,19 +172,38 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
             </Form>
 
             {currentAction === ACTION_SIGN_IN && (
-              <button
-                type="button"
-                className="PlainButton"
-                onClick={signUpButtonHandler}
-              >
-                Need an account?
-              </button>
+              <>
+                <p>
+                  <button
+                    type="button"
+                    className="PlainButton"
+                    onClick={passwordResetButtonHandler}
+                  >
+                    Forgot your password?
+                  </button>
+                </p>
+                <p>
+                  <button
+                    type="button"
+                    className="PlainButton"
+                    onClick={signUpButtonHandler}
+                  >
+                    Need an account?
+                  </button>
+                </p>
+              </>
             )}
 
             {currentAction === ACTION_SIGN_UP && (
-              <button type="button" className="PlainButton">
-                Already have an account?
-              </button>
+              <p>
+                <button
+                  onClick={signInButtonHandler}
+                  type="button"
+                  className="PlainButton"
+                >
+                  Already have an account?
+                </button>
+              </p>
             )}
           </div>
         </div>
