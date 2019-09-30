@@ -120,7 +120,7 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
               onClick={closeDialogue}
               type="button"
             >
-              exit
+              &times;
             </button>
             <h2>{ACTION_TITLES[currentAction]}</h2>
             <Form onSubmit={onSubmit} initialValues={INITIAL_VALUES}>

@@ -1,7 +1,5 @@
 :root {
   --accent-color: #485460;
-  /* --accent-color: #3c40c6; */
-  /*   background: #05c46b; */
 }
 
 @import url("https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap");
@@ -144,6 +142,9 @@ h2 {
   border: none;
   cursor: pointer;
   background: transparent;
+  height: 1rem;
+  width: 1rem;
+  line-height: 1rem;
 }
 
 .ExitButton:focus,
