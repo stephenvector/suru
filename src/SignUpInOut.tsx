@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FormApi } from "final-form";
 import { Form, Field } from "react-final-form";
+import firebase from "firebase";
+import "firebase/auth";
 
 const ACTION_SIGN_UP: ActionType = "signup";
 const ACTION_SIGN_OUT: ActionType = "signout";
@@ -65,11 +67,21 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
     setCurrentAction(ACTION_SIGN_IN);
   }
 
+  function signOutHandler() {
+    firebase.auth().signOut();
+  }
+
   function onSubmit(
-    values: SignUpInOutFormValues,
+    { email, password, actionType }: SignUpInOutFormValues,
     form: FormApi<SignUpInOutFormValues>
   ) {
-    if (values.actionType) {
+    switch (actionType) {
+      case ACTION_SIGN_UP:
+        return firebase.auth().createUserWithEmailAndPassword(email, password);
+      case ACTION_SIGN_IN:
+        return firebase.auth().signInWithEmailAndPassword(email, password);
+      default:
+        return;
     }
   }
 
@@ -95,7 +107,7 @@ export default function SignUpInOut({ signedIn }: SignUpInOutProps) {
         </>
       )}
       {signedIn && (
-        <button className="PlainButton" type="button">
+        <button onClick={signOutHandler} className="PlainButton" type="button">
           {ACTION_TITLES[ACTION_SIGN_OUT]}
         </button>
       )}

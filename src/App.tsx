@@ -5,25 +5,32 @@ import SignUpInOut from "./SignUpInOut";
 import Masthead from "./Masthead";
 import Demo from "./Demo";
 
+type CurrentUser = {
+  uid: string;
+  email: string;
+};
+
+const DEFAULT_CURRENT_USER: CurrentUser = {
+  uid: "",
+  email: ""
+};
+
 export default function App() {
   const [checkedAuth, setCheckedAuth] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(DEFAULT_CURRENT_USER);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         setSignedIn(true);
-        // // User is signed in.
-        // var displayName = user.displayName;
-        // var email = user.email;
-        // var emailVerified = user.emailVerified;
-        // var photoURL = user.photoURL;
-        // var isAnonymous = user.isAnonymous;
-        // var uid = user.uid;
-        // var providerData = user.providerData;
-        // // ...
+        const { uid, email } = user;
+        if (email !== null) {
+          setCurrentUser({ uid, email });
+        }
       } else {
         setSignedIn(false);
+        setCurrentUser(DEFAULT_CURRENT_USER);
       }
       setCheckedAuth(true);
     });
