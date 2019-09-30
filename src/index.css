@@ -1,0 +1,243 @@
+:root {
+  --accent-color: #485460;
+  /* --accent-color: #3c40c6; */
+  /*   background: #05c46b; */
+}
+
+@import url("https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap");
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: "Barlow", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+
+  font-family: "Roboto Mono", monospace;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  background: #fff;
+  border: 0;
+  border-bottom: 2px solid #333;
+  display: block;
+  font: inherit;
+  padding: 0.5rem;
+  line-height: 2rem;
+  margin: 0;
+  width: 100%;
+  border-radius: 3px;
+  background: #f2f2f2;
+  border-bottom: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  box-shadow: inset 0 0 0 1px var(--accent-color), 0 0 3px 0 #0fbcf9;
+}
+
+input[type="checkbox"] {
+  border: 0;
+  background: #ddd;
+  display: block;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+}
+
+h1,
+h2 {
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #666;
+  letter-spacing: -0.06em;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.TodoList {
+  margin-top: 3rem;
+}
+
+.TodoListItem {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.CompleteIcon {
+  cursor: pointer;
+  font-family: serif;
+}
+
+.IncompleteIcon {
+  cursor: pointer;
+  font-family: serif;
+}
+
+.ToggleButton {
+  border: none;
+  font-size: inherit;
+  background: transparent;
+  border-radius: 0;
+}
+
+.SignUpInOutDialogue {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  padding: 1rem;
+}
+
+.SignUpInOutDialogContent {
+  background: transparent;
+  margin: 2rem auto;
+  max-width: 22rem;
+  width: 100%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 0.3rem 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  cursor: pointer;
+}
+
+.ExitButton {
+  font: inherit;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.ExitButton:focus,
+.ExitButton:hover {
+  color: var(--accent-color);
+}
+
+.SignUpInOutDialogContent input {
+  margin-bottom: 2rem;
+}
+
+.Button {
+  background: transparent;
+  color: var(--accent-color);
+  font: inherit;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 3px;
+  margin: 0;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px var(--accent-color);
+  width: 100%;
+}
+
+.Button:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+label {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.PlainButton {
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  border: 0;
+}
+
+.App {
+  margin: 0 auto;
+  max-width: 42rem;
+}
+
+.App h1 {
+  opacity: 0.4;
+  margin: 0;
+}
+
+.AppHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.Masthead {
+  padding: 10rem 0;
+}
+
+.Masthead h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.NewTodo {
+  display: flex;
+}
+
+.NewTodo button {
+  font: inherit;
+  border: none;
+  background: transparent;
+}
+
+.DemoTodoListWrapper {
+  position: relative;
+}
+
+.DemoTodoListGradientOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  /* background: red; */
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
