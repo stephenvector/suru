@@ -231,6 +231,7 @@ label {
 
 .DemoTodoListWrapper {
   position: relative;
+  min-height: 12rem;
 }
 
 .DemoTodoListGradientOverlay {
